@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Cita - BarberShop Management</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <script src="../navbar.js"></script>
+    
+    <div class="main-container">
+        <div class="page-title">
+            <i class="bi bi-calendar-check"></i>
+            <h2 id="form-titulo">Nueva Cita</h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="citaForm">
+                            <div class="mb-3" style="display: none;">
+                                <label for="citaId" class="form-label">ID</label>
+                                <input type="text" class="form-control" id="citaId" readonly>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="clienteId" class="form-label">Cliente <span class="text-danger">*</span></label>
+                                <select class="form-select" id="clienteId" required>
+                                    <option value="">-- Seleccione un cliente --</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="barberoId" class="form-label">Barbero <span class="text-danger">*</span></label>
+                                <select class="form-select" id="barberoId" required>
+                                    <option value="">-- Seleccione un barbero --</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="servicioId" class="form-label">Servicio <span class="text-danger">*</span></label>
+                                <select class="form-select" id="servicioId" required>
+                                    <option value="">-- Seleccione un servicio --</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="fecha" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">Hora <span class="text-danger">*</span></label>
+                                <input type="time" class="form-control" id="hora" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="estado" class="form-label">Estado <span class="text-danger">*</span></label>
+                                <select class="form-select" id="estado" required>
+                                    <option value="">-- Seleccione un estado --</option>
+                                    <option value="PENDIENTE">Pendiente</option>
+                                    <option value="CONFIRMADA">Confirmada</option>
+                                    <option value="COMPLETADA">Completada</option>
+                                    <option value="CANCELADA">Cancelada</option>
+                                </select>
+                            </div>
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-gold">
+                                    <i class="bi bi-check-circle"></i> Guardar
+                                </button>
+                                <a href="citas.html" class="btn btn-secondary">
+                                    <i class="bi bi-x-circle"></i> Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Citas Form JS -->
+    <script src="citas_form.js"></script>
+</body>
+</html>

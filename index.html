@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BarberShop Management - Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="navbar.js"></script>
+    
+    <div class="main-container">
+        <div class="dashboard-header">
+            <h1><i class="bi bi-scissors"></i> BarberShop Management</h1>
+            <p class="subtitle">Panel de Administración</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Card Barberos -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <i class="bi bi-scissors"></i>
+                    <div class="dashboard-card-number" id="barberos-count">0</div>
+                    <div class="dashboard-card-title">Barberos</div>
+                    <a href="barberos/barberos.html" class="btn btn-gold">Ver Barberos</a>
+                </div>
+            </div>
+            
+            <!-- Card Servicios -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <i class="bi bi-clipboard2-check"></i>
+                    <div class="dashboard-card-number" id="servicios-count">0</div>
+                    <div class="dashboard-card-title">Servicios</div>
+                    <a href="servicios/servicios.html" class="btn btn-gold">Ver Servicios</a>
+                </div>
+            </div>
+            
+            <!-- Card Clientes -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <i class="bi bi-people"></i>
+                    <div class="dashboard-card-number" id="clientes-count">0</div>
+                    <div class="dashboard-card-title">Clientes</div>
+                    <a href="clientes/clientes.html" class="btn btn-gold">Ver Clientes</a>
+                </div>
+            </div>
+            
+            <!-- Card Citas -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <i class="bi bi-calendar-check"></i>
+                    <div class="dashboard-card-number" id="citas-count">0</div>
+                    <div class="dashboard-card-title">Citas</div>
+                    <a href="citas/citas.html" class="btn btn-gold">Ver Citas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
+    <!-- Dashboard Script -->
+    <script>
+        const API_URL = 'http://localhost:8080/api';
+        
+        function cargarDashboard() {
+            // Cargar conteos de todas las entidades
+            Promise.all([
+                axios.get(`${API_URL}/barberos`),
+                axios.get(`${API_URL}/servicios`),
+                axios.get(`${API_URL}/clientes`),
+                axios.get(`${API_URL}/citas`)
+            ]).then(responses => {
+                document.getElementById('barberos-count').textContent = responses[0].data.length || 0;
+                document.getElementById('servicios-count').textContent = responses[1].data.length || 0;
+                document.getElementById('clientes-count').textContent = responses[2].data.length || 0;
+                document.getElementById('citas-count').textContent = responses[3].data.length || 0;
+            }).catch(error => {
+                console.error('Error al cargar dashboard:', error);
+                // Mostrar valores por defecto si hay error
+                document.getElementById('barberos-count').textContent = '0';
+                document.getElementById('servicios-count').textContent = '0';
+                document.getElementById('clientes-count').textContent = '0';
+                document.getElementById('citas-count').textContent = '0';
+            });
+        }
+        
+        window.addEventListener('DOMContentLoaded', cargarDashboard);
+    </script>
+</body>
+</html>

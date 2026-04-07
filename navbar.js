@@ -1,0 +1,87 @@
+function loadNavbar() {
+    // Detectar la ubicación actual
+    const currentPath = window.location.pathname;
+    const isInSubfolder = currentPath.includes('/barberos/') || 
+                         currentPath.includes('/servicios/') || 
+                         currentPath.includes('/clientes/') || 
+                         currentPath.includes('/citas/');
+    
+    // Ajustar rutas según si estamos en la raíz o en subcarpeta
+    const rootPrefix = isInSubfolder ? '../' : '';
+    
+    const navbarHtml = `
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="${rootPrefix}index.html">
+                    <i class="bi bi-scissors"></i> BarberShop
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${rootPrefix}index.html" id="nav-inicio">
+                                <i class="bi bi-house-door"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${rootPrefix}barberos/barberos.html" id="nav-barberos">
+                                <i class="bi bi-scissors"></i> Barberos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${rootPrefix}servicios/servicios.html" id="nav-servicios">
+                                <i class="bi bi-clipboard2-check"></i> Servicios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${rootPrefix}clientes/clientes.html" id="nav-clientes">
+                                <i class="bi bi-people"></i> Clientes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${rootPrefix}citas/citas.html" id="nav-citas">
+                                <i class="bi bi-calendar-check"></i> Citas
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    `;
+    
+    document.body.insertAdjacentHTML('afterbegin', navbarHtml);
+    
+    // Detectar página activa y marcar como activa
+    setActiveNavLink();
+}
+
+function setActiveNavLink() {
+    const currentUrl = window.location.href.toLowerCase();
+    
+    const navLinks = {
+        'nav-inicio': ['index.html'],
+        'nav-barberos': ['barberos.html'],
+        'nav-servicios': ['servicios.html'],
+        'nav-clientes': ['clientes.html'],
+        'nav-citas': ['citas.html']
+    };
+    
+    Object.keys(navLinks).forEach(id => {
+        const link = document.getElementById(id);
+        if (link) {
+            const routes = navLinks[id];
+            const isActive = routes.some(route => currentUrl.includes(route));
+            
+            if (isActive) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        }
+    });
+}
+
+// Cargar navbar cuando el documento esté listo
+window.addEventListener('DOMContentLoaded', loadNavbar);
