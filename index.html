@@ -24,6 +24,7 @@
         <div class="dashboard-header">
             <h1><i class="bi bi-scissors"></i> BarberShop Management</h1>
             <p class="subtitle">Panel de Administración</p>
+            <p id="saludo-inicio" class="mt-2 mb-0"></p>
         </div>
         
         <div class="row g-4">
@@ -78,6 +79,19 @@
     <!-- Dashboard Script -->
     <script>
         const API_URL = 'http://localhost:8080/api';
+
+        function cargarSaludo() {
+            const nombreUsuario = localStorage.getItem('nombreUsuario') || 'cliente';
+
+            axios.get(`${API_URL}/saludo/inicio`, {
+                params: { nombre: nombreUsuario }
+            }).then(response => {
+                document.getElementById('saludo-inicio').textContent = response.data;
+            }).catch(error => {
+                console.error('Error al cargar saludo:', error);
+                document.getElementById('saludo-inicio').textContent = `Bienvenido, ${nombreUsuario}.`;
+            });
+        }
         
         function cargarDashboard() {
             // Cargar conteos de todas las entidades
@@ -101,7 +115,10 @@
             });
         }
         
-        window.addEventListener('DOMContentLoaded', cargarDashboard);
+        window.addEventListener('DOMContentLoaded', () => {
+            cargarSaludo();
+            cargarDashboard();
+        });
     </script>
 </body>
 </html>
