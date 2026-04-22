@@ -325,7 +325,79 @@ label {
     color: var(--color-gold);
 }
 
-/* Responsive */
+/* ── Skeleton loader ── */
+@keyframes skeleton-shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+}
+
+.skeleton-row td {
+    padding: 0.75rem 0.5rem;
+}
+
+.skeleton-cell {
+    height: 16px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+    background-size: 800px 100%;
+    animation: skeleton-shimmer 1.4s infinite;
+}
+
+/* ── API status dot in navbar ── */
+.api-status-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    transition: background-color 0.4s;
+}
+
+.api-status-dot.online  { background-color: #27ae60; box-shadow: 0 0 6px #27ae60; }
+.api-status-dot.offline { background-color: #e74c3c; box-shadow: 0 0 6px #e74c3c; }
+
+/* ── Badge pills mejorados ── */
+.badge {
+    border-radius: 50px !important;
+    letter-spacing: 0.03em;
+}
+
+/* ── Dashboard stat number counter animation ── */
+@keyframes count-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-card-number {
+    animation: count-up 0.4s ease;
+}
+
+/* ── Table row highlight on hover (more visible) ── */
+.table-hover tbody tr:hover td {
+    color: #fff;
+}
+
+/* ── Form invalid feedback inline ── */
+.form-control.is-invalid,
+.form-select.is-invalid {
+    border-color: #e74c3c;
+    box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+}
+
+.invalid-feedback {
+    color: #e74c3c;
+    font-size: 0.82rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Tags container for multi-value specialty input */
+.min-height-tags {
+    min-height: 38px;
+}
+
+/* ── Responsive */
 @media (max-width: 768px) {
     .dashboard-header h1 {
         font-size: 2rem;

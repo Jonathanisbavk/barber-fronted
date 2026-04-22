@@ -1,4 +1,3 @@
-const API_URL = 'http://localhost:8080/api';
 const tableBody = document.getElementById('barberos-table-body');
 let barberos = [];
 
@@ -20,24 +19,34 @@ function cargarBarberos() {
         });
 }
 
+// Convierte la lista de objetos especialidad en badges HTML
+function renderEspecialidades(especialidades) {
+    if (!especialidades || especialidades.length === 0) {
+        return '<span class="text-muted fst-italic">Sin especialidad</span>';
+    }
+    return especialidades
+        .map(e => `<span class="badge bg-secondary rounded-pill me-1">${e.nombre}</span>`)
+        .join('');
+}
+
 function renderizarBarberos(lista) {
     tableBody.innerHTML = '';
     if (lista.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="6" class="text-center">No hay barberos registrados</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">No hay barberos registrados</td></tr>';
         return;
     }
-    
+
     lista.forEach(barbero => {
         const fila = document.createElement('tr');
-        const estadoBadge = barbero.disponible 
-            ? '<span class="badge bg-success">Disponible</span>'
-            : '<span class="badge bg-danger">No disponible</span>';
-        
+        const estadoBadge = barbero.disponible
+            ? '<span class="badge bg-success rounded-pill"><i class="bi bi-check-circle me-1"></i>Disponible</span>'
+            : '<span class="badge bg-danger rounded-pill"><i class="bi bi-x-circle me-1"></i>No disponible</span>';
+
         fila.innerHTML = `
             <td>${barbero.id}</td>
             <td>${barbero.nombre}</td>
-            <td>${barbero.especialidad}</td>
-            <td>${barbero.telefono}</td>
+            <td>${renderEspecialidades(barbero.especialidades)}</td>
+            <td>${barbero.telefono || '—'}</td>
             <td>${estadoBadge}</td>
             <td>
                 <button class="btn btn-warning btn-sm" onclick="editarBarbero(${barbero.id})">
@@ -52,14 +61,17 @@ function renderizarBarberos(lista) {
     });
 }
 
-// Búsqueda en tiempo real
+// Búsqueda en tiempo real — ahora busca dentro de la lista de especialidades
 document.getElementById('search-input').addEventListener('input', (e) => {
     const termino = e.target.value.toLowerCase();
-    const filtrados = barberos.filter(barbero => 
-        barbero.nombre.toLowerCase().includes(termino) ||
-        barbero.especialidad.toLowerCase().includes(termino) ||
-        barbero.telefono.toLowerCase().includes(termino)
-    );
+    const filtrados = barberos.filter(barbero => {
+        const nombresEsp = (barbero.especialidades || []).map(e => e.nombre.toLowerCase()).join(' ');
+        return (
+            barbero.nombre.toLowerCase().includes(termino) ||
+            nombresEsp.includes(termino) ||
+            (barbero.telefono || '').toLowerCase().includes(termino)
+        );
+    });
     renderizarBarberos(filtrados);
 });
 

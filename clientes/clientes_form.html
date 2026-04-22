@@ -43,7 +43,17 @@
                             
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="telefono" required placeholder="Ej: +51 987654321">
+                                <div class="input-group">
+                                    <span class="input-group-text" style="background:#444; color:var(--color-gold); border-color:var(--color-border); font-weight:600;">+51</span>
+                                    <input type="tel" class="form-control" id="telefono"
+                                           placeholder="987654321"
+                                           maxlength="9"
+                                           pattern="[0-9]{9}"
+                                           inputmode="numeric">
+                                </div>
+                                <div id="telefono-feedback" class="invalid-feedback" style="display:none;">
+                                    Ingresa exactamente 9 dígitos numéricos.
+                                </div>
                             </div>
                             
                             <div class="mb-3">
@@ -75,6 +85,9 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <!-- Config -->
+    <script src="../config.js"></script>
+
     <!-- Clientes Form JS -->
     <script src="clientes_form.js"></script>
 </body>

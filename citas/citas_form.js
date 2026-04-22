@@ -1,4 +1,3 @@
-const API_URL = 'http://localhost:8080/api';
 const form = document.getElementById('citaForm');
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
@@ -24,7 +23,8 @@ function cargarSelects() {
         responses[1].data.forEach(barbero => {
             const option = document.createElement('option');
             option.value = barbero.id;
-            option.textContent = `${barbero.nombre} - ${barbero.especialidad}`;
+            const esps = (barbero.especialidades || []).map(e => e.nombre).join(', ');
+            option.textContent = barbero.nombre + (esps ? ` - ${esps}` : '');
             selectBarbero.appendChild(option);
         });
         

@@ -1,4 +1,3 @@
-const API_URL = 'http://localhost:8080/api';
 const tableBody = document.getElementById('servicios-table-body');
 let servicios = [];
 

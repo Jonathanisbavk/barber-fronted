@@ -4,117 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberShop Management - Dashboard</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <script src="navbar.js"></script>
-    
+
     <div class="main-container">
         <div class="dashboard-header">
             <h1><i class="bi bi-scissors"></i> BarberShop Management</h1>
             <p class="subtitle">Panel de Administración</p>
-            <p id="saludo-inicio" class="mt-2 mb-0"></p>
+            <p id="saludo-inicio" class="mt-2 mb-0" style="color: var(--color-text-muted); font-style: italic;"></p>
         </div>
-        
+
         <div class="row g-4">
             <!-- Card Barberos -->
             <div class="col-md-6 col-lg-3">
                 <div class="dashboard-card">
                     <i class="bi bi-scissors"></i>
-                    <div class="dashboard-card-number" id="barberos-count">0</div>
+                    <div class="dashboard-card-number" id="barberos-count">—</div>
                     <div class="dashboard-card-title">Barberos</div>
-                    <a href="barberos/barberos.html" class="btn btn-gold">Ver Barberos</a>
+                    <a href="barberos/barberos.html" class="btn btn-gold mt-1">
+                        <i class="bi bi-arrow-right-circle"></i> Ver Barberos
+                    </a>
                 </div>
             </div>
-            
+
             <!-- Card Servicios -->
             <div class="col-md-6 col-lg-3">
                 <div class="dashboard-card">
                     <i class="bi bi-clipboard2-check"></i>
-                    <div class="dashboard-card-number" id="servicios-count">0</div>
+                    <div class="dashboard-card-number" id="servicios-count">—</div>
                     <div class="dashboard-card-title">Servicios</div>
-                    <a href="servicios/servicios.html" class="btn btn-gold">Ver Servicios</a>
+                    <a href="servicios/servicios.html" class="btn btn-gold mt-1">
+                        <i class="bi bi-arrow-right-circle"></i> Ver Servicios
+                    </a>
                 </div>
             </div>
-            
+
             <!-- Card Clientes -->
             <div class="col-md-6 col-lg-3">
                 <div class="dashboard-card">
                     <i class="bi bi-people"></i>
-                    <div class="dashboard-card-number" id="clientes-count">0</div>
+                    <div class="dashboard-card-number" id="clientes-count">—</div>
                     <div class="dashboard-card-title">Clientes</div>
-                    <a href="clientes/clientes.html" class="btn btn-gold">Ver Clientes</a>
+                    <a href="clientes/clientes.html" class="btn btn-gold mt-1">
+                        <i class="bi bi-arrow-right-circle"></i> Ver Clientes
+                    </a>
                 </div>
             </div>
-            
+
             <!-- Card Citas -->
             <div class="col-md-6 col-lg-3">
                 <div class="dashboard-card">
                     <i class="bi bi-calendar-check"></i>
-                    <div class="dashboard-card-number" id="citas-count">0</div>
+                    <div class="dashboard-card-number" id="citas-count">—</div>
                     <div class="dashboard-card-title">Citas</div>
-                    <a href="citas/citas.html" class="btn btn-gold">Ver Citas</a>
+                    <a href="citas/citas.html" class="btn btn-gold mt-1">
+                        <i class="bi bi-arrow-right-circle"></i> Ver Citas
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Citas pendientes del día -->
+        <div class="mt-4">
+            <div class="card">
+                <div class="card-header d-flex align-items-center gap-2">
+                    <i class="bi bi-clock-history" style="color: var(--color-gold);"></i>
+                    <span style="font-family: 'Oswald', sans-serif; color: var(--color-gold);">Citas Pendientes</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Barbero</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="citas-pendientes-body">
+                                <tr class="skeleton-row">
+                                    <td><div class="skeleton-cell"></div></td>
+                                    <td><div class="skeleton-cell"></div></td>
+                                    <td><div class="skeleton-cell"></div></td>
+                                    <td><div class="skeleton-cell"></div></td>
+                                    <td><div class="skeleton-cell"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+
+    <!-- Config -->
+    <script src="config.js"></script>
+
     <!-- Dashboard Script -->
     <script>
-        const API_URL = 'http://localhost:8080/api';
-
         function cargarSaludo() {
-            const nombreUsuario = localStorage.getItem('nombreUsuario') || 'cliente';
-
-            axios.get(`${API_URL}/saludo/inicio`, {
-                params: { nombre: nombreUsuario }
-            }).then(response => {
-                document.getElementById('saludo-inicio').textContent = response.data;
-            }).catch(error => {
-                console.error('Error al cargar saludo:', error);
-                document.getElementById('saludo-inicio').textContent = `Bienvenido, ${nombreUsuario}.`;
-            });
+            const nombre = localStorage.getItem('nombreUsuario') || 'Admin';
+            axios.get(`${API_URL}/saludo/inicio`, { params: { nombre } })
+                .then(r => { document.getElementById('saludo-inicio').textContent = r.data; })
+                .catch(() => { document.getElementById('saludo-inicio').textContent = `Bienvenido, ${nombre}.`; });
         }
-        
+
+        function badgeEstado(estado) {
+            const map = {
+                PENDIENTE:  ['bg-warning text-dark', 'bi-clock',       'Pendiente'],
+                CONFIRMADA: ['bg-primary',            'bi-check-circle','Confirmada'],
+                COMPLETADA: ['bg-success',            'bi-check2-all', 'Completada'],
+                CANCELADA:  ['bg-secondary',          'bi-x-circle',   'Cancelada'],
+            };
+            const [cls, icon, label] = map[estado] || ['bg-secondary', 'bi-question', estado];
+            return `<span class="badge ${cls}"><i class="bi ${icon} me-1"></i>${label}</span>`;
+        }
+
         function cargarDashboard() {
-            // Cargar conteos de todas las entidades
             Promise.all([
                 axios.get(`${API_URL}/barberos`),
                 axios.get(`${API_URL}/servicios`),
                 axios.get(`${API_URL}/clientes`),
                 axios.get(`${API_URL}/citas`)
-            ]).then(responses => {
-                document.getElementById('barberos-count').textContent = responses[0].data.length || 0;
-                document.getElementById('servicios-count').textContent = responses[1].data.length || 0;
-                document.getElementById('clientes-count').textContent = responses[2].data.length || 0;
-                document.getElementById('citas-count').textContent = responses[3].data.length || 0;
-            }).catch(error => {
-                console.error('Error al cargar dashboard:', error);
-                // Mostrar valores por defecto si hay error
-                document.getElementById('barberos-count').textContent = '0';
-                document.getElementById('servicios-count').textContent = '0';
-                document.getElementById('clientes-count').textContent = '0';
-                document.getElementById('citas-count').textContent = '0';
+            ]).then(([rb, rs, rc, rci]) => {
+                document.getElementById('barberos-count').textContent  = rb.data.length;
+                document.getElementById('servicios-count').textContent = rs.data.length;
+                document.getElementById('clientes-count').textContent  = rc.data.length;
+                document.getElementById('citas-count').textContent     = rci.data.length;
+
+                const clientes  = rc.data;
+                const barberos  = rb.data;
+                const pendientes = rci.data.filter(c => c.estado === 'PENDIENTE').slice(0, 8);
+                const tbody = document.getElementById('citas-pendientes-body');
+
+                if (pendientes.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No hay citas pendientes</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = pendientes.map(cita => {
+                    const cliente = clientes.find(c => c.id === cita.clienteId);
+                    const barbero = barberos.find(b => b.id === cita.barberoId);
+                    return `<tr>
+                        <td>${cliente ? cliente.nombre : 'N/A'}</td>
+                        <td>${barbero ? barbero.nombre : 'N/A'}</td>
+                        <td>${cita.fecha}</td>
+                        <td>${cita.hora}</td>
+                        <td>${badgeEstado(cita.estado)}</td>
+                    </tr>`;
+                }).join('');
+            }).catch(() => {
+                ['barberos-count','servicios-count','clientes-count','citas-count']
+                    .forEach(id => document.getElementById(id).textContent = '?');
+                document.getElementById('citas-pendientes-body').innerHTML =
+                    '<tr><td colspan="5" class="text-center text-danger py-3"><i class="bi bi-exclamation-triangle me-2"></i>No se pudo conectar con la API</td></tr>';
             });
         }
-        
+
         window.addEventListener('DOMContentLoaded', () => {
             cargarSaludo();
             cargarDashboard();

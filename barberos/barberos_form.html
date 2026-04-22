@@ -42,13 +42,35 @@
                             </div>
                             
                             <div class="mb-3">
-                                <label for="especialidad" class="form-label">Especialidad <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="especialidad" required placeholder="Ej: Corte, Afeitado, Tinte">
+                                <label class="form-label">Especialidades <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="especialidad-input"
+                                           placeholder="Ej: Corte clásico — presiona Enter o +"
+                                           autocomplete="off">
+                                    <button type="button" class="btn btn-gold" id="btn-agregar-esp">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                                <!-- Contenedor de tags (badges removibles) -->
+                                <div id="especialidades-tags" class="mt-2 d-flex flex-wrap gap-2 min-height-tags"></div>
+                                <div id="especialidades-feedback" class="invalid-feedback" style="display:none;">
+                                    Agrega al menos una especialidad.
+                                </div>
                             </div>
                             
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="telefono" required placeholder="Ej: +51 987654321">
+                                <div class="input-group">
+                                    <span class="input-group-text" style="background:#444; color:var(--color-gold); border-color:var(--color-border); font-weight:600;">+51</span>
+                                    <input type="tel" class="form-control" id="telefono"
+                                           placeholder="987654321"
+                                           maxlength="9"
+                                           pattern="[0-9]{9}"
+                                           inputmode="numeric">
+                                </div>
+                                <div id="telefono-feedback" class="invalid-feedback" style="display:none;">
+                                    Ingresa exactamente 9 dígitos numéricos.
+                                </div>
                             </div>
                             
                             <div class="mb-3">
@@ -84,6 +106,9 @@
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
+    <!-- Config -->
+    <script src="../config.js"></script>
+
     <!-- Barberos Form JS -->
     <script src="barberos_form.js"></script>
 </body>

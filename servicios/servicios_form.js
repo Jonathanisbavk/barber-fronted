@@ -1,4 +1,3 @@
-const API_URL = 'http://localhost:8080/api';
 const form = document.getElementById('servicioForm');
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
