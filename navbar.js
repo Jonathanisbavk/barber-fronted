@@ -3,7 +3,8 @@ function loadNavbar() {
     const isInSubfolder = currentPath.includes('/barberos/') ||
                           currentPath.includes('/servicios/') ||
                           currentPath.includes('/clientes/') ||
-                          currentPath.includes('/citas/');
+                          currentPath.includes('/citas/') ||
+                          currentPath.includes('/caja/');
 
     const rootPrefix = isInSubfolder ? '../' : '';
 
